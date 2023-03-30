@@ -1,1 +1,1 @@
-This repository contains all my low level(C Programming) tasks
+This is a repository of all my ALX SE Low Level Pragramming Projects
