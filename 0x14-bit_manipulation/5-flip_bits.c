@@ -10,6 +10,7 @@
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
 	// Calculate the bitwise XOR of n and m to get the bits that are different
+	int c = 0
 	unsigned long int xor = n ^ m;
 	
 	// Count the number of bits that are different
