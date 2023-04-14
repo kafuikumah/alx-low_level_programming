@@ -16,57 +16,41 @@ int main(int argc, char *argv[])
 
 	if (argc != 3)
 	{
-		/* Print error message if incorrect number of arguments provided */
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-
-	/* Open the source file */
 	fd_from = open(argv[1], O_RDONLY);
 	if (fd_from == -1)
 	{
-		/* Print error message if unable to read source file */
-		dprintf(STDERR_FILENO, "Error: Cannot read from file %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-
-	/* Open the destination file */
 	fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (fd_to == -1)
 	{
-		/* Print error message if unable to write to destination file */
-		dprintf(STDERR_FILENO, "Error: Cannot write to %s\n", argv[2]);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 		exit(99);
 	}
-
-	/* Allocate memory for buffer */
 	buf = malloc(sizeof(char) * 1024);
 	if (!buf)
 		return (-1);
 
 	do {
-		/* Read from source file */
 		n = read(fd_from, buf, 1024);
 		if (n == -1)
 		{
-			/* Print error message if unable to read from source file */
-			dprintf(STDERR_FILENO, "Error: Cannot read from file %s\n", argv[1]);
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 			exit(98);
 		}
-
-		/* Write to destination file */
 		n1 = write(fd_to, buf, n);
 		if (n1 != n)
 		{
-			/* Print error message if unable to write to destination file */
-			dprintf(STDERR_FILENO, "Error: Cannot write to %s\n", argv[2]);
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 			exit(99);
 		}
-
 		i++;
 	} while (n == 1024);
 
-	/* Free memory and close files */
 	free_close(buf_ptr, fd1_ptr, fd2_ptr);
 
 	return (0);
@@ -83,23 +67,17 @@ void free_close(char **buf, int *fd1, int *fd2)
 {
 	int n, n1;
 
-	/* Free memory allocated for buffer */
 	free(*buf);
-
-	/* Close the source file */
 	n = close(*fd1);
 	if (n == -1)
 	{
-		/* Print error message if unable to close source file */
-		dprintf(STDERR_FILENO, "Error: Cannot close fd %d\n", *fd1);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", *fd1);
 		exit(100);
 	}
-
-	/* Close the destination file */
 	n1 = close(*fd2);
-	if (n1 == -1) 
+	if (n1 == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Cannot close fd %d\n", *fd2);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", *fd2);
 		exit(100);
 	}
 }
